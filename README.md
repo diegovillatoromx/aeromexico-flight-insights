@@ -10,7 +10,7 @@ Este proyecto no solo facilita el análisis de la eficiencia y rentabilidad de l
 
 
 ## Architecture
-<img src='https://github.com/diegovillatoromx/aeromexico-flight-insights/blob/main/infraestructura-aws.gif' alt="architecture_diagram">
+<img src='https://github.com/diegovillatoromx/aeromexico-flight-insights/blob/main/arquitectura-aws-aeromexico.gif' alt="architecture_diagram">
 
 
 
