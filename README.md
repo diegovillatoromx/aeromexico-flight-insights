@@ -9,6 +9,10 @@ El resultado es un dashboard dinámico, desarrollado en Tableau e integrado en u
 Este proyecto no solo facilita el análisis de la eficiencia y rentabilidad de las rutas, sino que también sienta las bases para una gestión proactiva y orientada a la mejora continua, colocando a Aeroméxico a la vanguardia de la innovación en la industria aérea.
 
 
+## Architecture
+<img src='https://github.com/diegovillatoromx/realtime-food-delivery-insights/blob/main/real-time-food-delivery.gif' alt="architecture_diagram">
+
+
 
 
 
