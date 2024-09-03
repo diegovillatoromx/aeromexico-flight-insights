@@ -9,7 +9,7 @@ El resultado es un dashboard dinámico, desarrollado en Tableau e integrado en u
 Este proyecto no solo facilita el análisis de la eficiencia y rentabilidad de las rutas, sino que también sienta las bases para una gestión proactiva y orientada a la mejora continua, colocando a Aeroméxico a la vanguardia de la innovación en la industria aérea.
 
 
-## Architecture
+## Infraestructura en AWS
 
 Esta arquitectura está diseñada para optimizar las rutas aéreas de Aeroméxico en tiempo real, utilizando análisis de datos en streaming. Permite a la compañía analizar la eficiencia de sus rutas, detectar oportunidades de mejora, y reaccionar rápidamente a cambios en la demanda o en la operación. También proporciona herramientas para visualizar la información clave y tomar decisiones basadas en datos para mejorar la satisfacción del cliente y la rentabilidad de las rutas.
 
