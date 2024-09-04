@@ -13,7 +13,7 @@ Este proyecto no solo facilita el análisis de la eficiencia y rentabilidad de l
 
 Esta arquitectura está diseñada para optimizar las rutas aéreas de Aeroméxico en tiempo real, utilizando análisis de datos en streaming. Permite a la compañía analizar la eficiencia de sus rutas, detectar oportunidades de mejora, y reaccionar rápidamente a cambios en la demanda o en la operación. También proporciona herramientas para visualizar la información clave y tomar decisiones basadas en datos para mejorar la satisfacción del cliente y la rentabilidad de las rutas.
 
-<img src='https://github.com/diegovillatoromx/aeromexico-flight-insights/blob/main/arquitectura-aws-aeromexico.gif' alt="architecture_diagram">
+<img src='https://github.com/diegovillatoromx/aeromexico-flight-insights/blob/main/aeromexico-pipeline.gif' alt="architecture_diagram">
 
 ### App Simulation (Simulación de Aplicación):
 
