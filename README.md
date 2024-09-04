@@ -15,7 +15,40 @@ Esta arquitectura está diseñada para optimizar las rutas aéreas de Aeroméxic
 
 <img src='https://github.com/diegovillatoromx/aeromexico-flight-insights/blob/main/arquitectura-aws-aeromexico.gif' alt="architecture_diagram">
 
+### App Simulation (Simulación de Aplicación):
 
+AWS Cloud9 con AWS CDK: Esta parte de la arquitectura simula la generación de datos en tiempo real, probablemente relacionada con rutas aéreas, pasajeros, costos, ingresos, etc. El entorno de desarrollo AWS Cloud9, junto con AWS CDK (Cloud Development Kit), se utiliza para desplegar y gestionar la infraestructura de la simulación.
+
+### Kafka:
+
+Streams de Kafka: Los datos generados por la simulación son enviados a Kafka, que actúa como un broker de mensajería para manejar el flujo de datos en tiempo real. Kafka permite la ingestión continua de grandes volúmenes de datos y facilita el procesamiento en tiempo real.
+
+### AWS Glue:
+Firehose: Los datos de Kafka se envían a través de Amazon Kinesis Data Firehose, que se encarga de cargar, transformar y entregar datos en servicios de destino como Amazon S3 y Amazon Redshift.
+AWS Glue: Se utiliza AWS Glue para ETL (Extracción, Transformación y Carga) de los datos en bruto almacenados en S3. AWS Glue cataloga, organiza y prepara los datos para su análisis. Aquí se almacenan en formatos como Parquet, que es eficiente para análisis.
+
+### Amazon S3:
+
+Conjunto de datos y almacenamiento RAW: S3 se utiliza como almacenamiento de datos en diferentes etapas: almacenamiento inicial de datos en bruto, y almacenamiento de datos transformados (por AWS Glue) en formato Parquet o JSON.
+
+### Data Analytics con Kinesis:
+
+Streams: La arquitectura también utiliza Amazon Kinesis Data Analytics para procesar los datos en tiempo real directamente desde Kafka, realizando análisis y agregaciones necesarias.
+
+### Amazon Redshift:
+
+Almacenamiento de datos: Amazon Redshift es el data warehouse donde los datos transformados se almacenan para análisis de alto rendimiento. Redshift permite realizar consultas SQL complejas y análisis de grandes volúmenes de datos.
+
+### Tableau:
+
+Visualización de datos: Tableau se conecta a Amazon Redshift para visualizar los datos analíticos. Aquí es donde se crearán dashboards que muestran rutas aéreas, ingresos, costos, satisfacción del cliente, y otras métricas importantes.
+
+### Lambda, DynamoDB, SNS, y CloudWatch:
+
+AWS Lambda: Se utiliza para ejecutar código en respuesta a eventos, por ejemplo, para procesar y enrutar datos analizados hacia DynamoDB o enviar notificaciones.
+DynamoDB: DynamoDB almacena datos procesados de forma eficiente, posiblemente para consultas rápidas o almacenamiento de metadatos.
+Amazon SNS (Simple Notification Service): SNS se utiliza para enviar alertas o notificaciones basadas en los análisis en tiempo real.
+Amazon CloudWatch: Se utiliza para monitorizar y registrar los eventos del sistema, permitiendo un seguimiento y resolución de problemas en tiempo real.
 
 
 
