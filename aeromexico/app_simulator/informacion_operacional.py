@@ -1,4 +1,4 @@
-import random
+import random 
 import json
 
 def generar_informacion_operacional():
