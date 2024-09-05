@@ -1,4 +1,4 @@
-# Optimización de Rutas Aéreas en Tiempo Real: Pipeline de Datos en AWS para Aeroméxico 
+# Optimización de Rutas Aéreas en Tiempo Real: Pipeline de Datos en AWS para Aeroméxico  
 
 En el negocio de la aviación, la capacidad de monitorear y optimizar rutas de vuelo en tiempo real es crucial para maximizar la rentabilidad, mejorar la satisfacción del cliente, y tomar decisiones estratégicas informadas. Este proyecto se ha diseñado con el objetivo de proporcionar a Aeroméxico un sistema avanzado de análisis y visualización de datos en tiempo real, que permite un control integral sobre el desempeño de sus rutas aéreas.
 
