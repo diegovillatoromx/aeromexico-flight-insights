@@ -1,5 +1,5 @@
 import random
-
+ 
 def generar_informacion_cliente():
     nacionalidades = ['Mexicana', 'Estadounidense', 'Canadiense', 'Europea', 'Asiática', 'Sudamericana']
     clases_de_vuelo = ['Económica', 'Ejecutiva', 'Primera clase']
