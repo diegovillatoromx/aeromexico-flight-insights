@@ -1,5 +1,5 @@
 import random
-import datetime
+import datetime 
 
 def generar_aeropuerto(tipo):
     aeropuertos_nacionales = ['MEX', 'GDL', 'MTY', 'CUN', 'TIJ', 'SLP', 'AGU', 'BJX', 'ACA', 'VER']
