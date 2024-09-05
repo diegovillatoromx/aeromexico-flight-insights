@@ -1,5 +1,5 @@
 import random
-import json
+import json 
 
 def generar_informacion_operacional():
     causas_de_retrasos = [
