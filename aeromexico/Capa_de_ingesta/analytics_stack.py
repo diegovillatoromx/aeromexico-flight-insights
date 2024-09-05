@@ -1,6 +1,6 @@
 import aws_cdk as cdk
 from aws_cdk import aws_kinesisanalytics as kda
-from aws_cdk import aws_iam as iam 
+from aws_cdk import aws_iam as iam  
 
 class KinesisAnalyticsStack(cdk.Stack):
     def __init__(self, scope: cdk.Construct, construct_id: str, **kwargs) -> None:
