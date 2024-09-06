@@ -1,7 +1,7 @@
 import aws_cdk as cdk
 from aws_cdk import aws_glue as glue
 from aws_cdk import aws_rds as rds
-from aws_cdk import aws_s3 as s3
+from aws_cdk import aws_s3 as s3 
 
 class GlueCrawlerStack(cdk.Stack):
     def __init__(self, scope: cdk.Construct, construct_id: str, **kwargs) -> None:
