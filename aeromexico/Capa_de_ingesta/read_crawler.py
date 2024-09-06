@@ -1,4 +1,4 @@
-import sys
+import sys 
 from awsglue.context import GlueContext
 from awsglue.job import Job
 
