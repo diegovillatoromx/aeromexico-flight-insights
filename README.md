@@ -82,16 +82,17 @@ Lambda para Procesamiento: Otra fuente de ingesta proviene de un bucket S3 difer
 ##### CodePipeline:
 
 ###### Fuente de Código:
-GitHub Repository: El código fuente para todas las funciones Lambda, configuraciones de Kafka, Glue Jobs, y cualquier otro script se aloja en un repositorio de GitHub.
-Build:
-CodeBuild con Docker: AWS CodeBuild se utiliza para construir imágenes Docker para las aplicaciones y servicios personalizados. Las imágenes Docker se generan a partir de Dockerfiles en el repositorio de GitHub.
-Deploy:
-Implementación con CloudFormation: Las plantillas de CloudFormation generadas en la fase de build se despliegan automáticamente en AWS. Si hay alguna actualización en la infraestructura, CodePipeline se encargará de implementar los cambios de manera controlada.
+-GitHub Repository: El código fuente para todas las funciones Lambda, configuraciones de Kafka, Glue Jobs, y cualquier otro script se aloja en un repositorio de GitHub.
+###### Build:
+- CodeBuild con Docker: AWS CodeBuild se utiliza para construir imágenes Docker para las aplicaciones y servicios personalizados. Las imágenes Docker se generan a partir de Dockerfiles en el repositorio de GitHub.
+###### Deploy:
+- Implementación con CloudFormation: Las plantillas de CloudFormation generadas en la fase de build se despliegan automáticamente en AWS. Si hay alguna actualización en la infraestructura, CodePipeline se encargará de implementar los cambios de manera controlada.
 Implementación de Contenedores en Kubernetes: CodePipeline también integra la implementación continua de contenedores en un clúster de Kubernetes.
-Entornos de Prueba y Producción:
+##### Entornos de Prueba y Producción:
 
-Pruebas Automatizadas: Se ejecutan pruebas automatizadas en un entorno de pruebas antes de desplegar en producción, asegurando que cualquier cambio en el código o la infraestructura sea validado antes de afectar al entorno productivo.
-3. Contenedorización con Docker
+###### Pruebas Automatizadas: Se ejecutan pruebas automatizadas en un entorno de pruebas antes de desplegar en producción, asegurando que cualquier cambio en el código o la infraestructura sea validado antes de afectar al entorno productivo.
+
+#### 3. Contenedorización con Docker
 Docker:
 
 Imágenes Docker:
