@@ -93,27 +93,27 @@ Implementación de Contenedores en Kubernetes: CodePipeline también integra la 
 ###### Pruebas Automatizadas: Se ejecutan pruebas automatizadas en un entorno de pruebas antes de desplegar en producción, asegurando que cualquier cambio en el código o la infraestructura sea validado antes de afectar al entorno productivo.
 
 #### 3. Contenedorización con Docker
-Docker:
+##### Docker:
 
-Imágenes Docker:
-Aplicaciones Customizadas: Las aplicaciones y microservicios se contenedorizan utilizando Docker. Por ejemplo, las funciones Lambda que requieren dependencias específicas pueden ser empaquetadas en imágenes Docker.
-Procesos de ETL y Analítica: Los trabajos ETL personalizados o cualquier otro proceso de datos intensivo también se pueden encapsular en contenedores Docker.
-Almacenamiento en ECR:
+###### Imágenes Docker:
+- Aplicaciones Customizadas: Las aplicaciones y microservicios se contenedorizan utilizando Docker. Por ejemplo, las funciones Lambda que requieren dependencias específicas pueden ser empaquetadas en imágenes Docker.
+- Procesos de ETL y Analítica: Los trabajos ETL personalizados o cualquier otro proceso de datos intensivo también se pueden encapsular en contenedores Docker.
+###### Almacenamiento en ECR:
 
-Elastic Container Registry (ECR): Las imágenes Docker se almacenan en Amazon ECR, desde donde se pueden desplegar en cualquier entorno.
-4. Orquestación de Contenedores con Kubernetes
-Kubernetes:
+- Elastic Container Registry (ECR): Las imágenes Docker se almacenan en Amazon ECR, desde donde se pueden desplegar en cualquier entorno.
+#### 4. Orquestación de Contenedores con Kubernetes
+##### Kubernetes:
 
-Clúster de Kubernetes en EKS:
-Amazon EKS: Se utiliza Amazon Elastic Kubernetes Service (EKS) para gestionar los contenedores. Kubernetes orquesta el despliegue, la escalabilidad y la gestión de los contenedores Docker en un clúster distribuido.
-Auto-Scaling: Kubernetes se configura para escalar automáticamente los pods basados en la carga de trabajo, garantizando que los servicios puedan manejar aumentos en el tráfico sin problemas de rendimiento.
-Implementación Rolling: Kubernetes facilita las implementaciones rolling, permitiendo que las nuevas versiones de las aplicaciones se desplieguen sin tiempo de inactividad.
-Integración con AWS:
+###### Clúster de Kubernetes en EKS:
+- Amazon EKS: Se utiliza Amazon Elastic Kubernetes Service (EKS) para gestionar los contenedores. Kubernetes orquesta el despliegue, la escalabilidad y la gestión de los contenedores Docker en un clúster distribuido.
+- Auto-Scaling: Kubernetes se configura para escalar automáticamente los pods basados en la carga de trabajo, garantizando que los servicios puedan manejar aumentos en el tráfico sin problemas de rendimiento.
+- Implementación Rolling: Kubernetes facilita las implementaciones rolling, permitiendo que las nuevas versiones de las aplicaciones se desplieguen sin tiempo de inactividad.
+###### Integración con AWS:
 
-ALB (Application Load Balancer): Un ALB se coloca frente al clúster de Kubernetes para manejar el tráfico entrante y distribuirlo entre los diferentes pods.
-IAM Roles para Pods: Los roles de IAM se asignan a los pods para permitir un acceso seguro y controlado a otros servicios de AWS, como S3, DynamoDB, y SNS.
-5. Monitoreo y Gestión Continua
-CloudWatch y Prometheus:
+- ALB (Application Load Balancer): Un ALB se coloca frente al clúster de Kubernetes para manejar el tráfico entrante y distribuirlo entre los diferentes pods.
+- IAM Roles para Pods: Los roles de IAM se asignan a los pods para permitir un acceso seguro y controlado a otros servicios de AWS, como S3, DynamoDB, y SNS.
+#### 5. Monitoreo y Gestión Continua
+##### CloudWatch:
 
-CloudWatch: CloudWatch sigue siendo la herramienta principal para la monitorización del rendimiento de los servicios de AWS. Además, puedes integrar Prometheus para la monitorización de métricas específicas de Kubernetes y aplicaciones dentro de los contenedores.
-Grafana: Para la visualización de métricas tanto de CloudWatch como de Prometheus, Grafana puede ser implementado, proporcionando dashboards en tiempo real para todo el sistema.
+- CloudWatch: CloudWatch sigue siendo la herramienta principal para la monitorización del rendimiento de los servicios de AWS. Además, puedes integrar Prometheus para la monitorización de métricas específicas de Kubernetes y aplicaciones dentro de los contenedores.
+- Grafana: Para la visualización de métricas tanto de CloudWatch como de Prometheus, Grafana puede ser implementado, proporcionando dashboards en tiempo real para todo el sistema.
