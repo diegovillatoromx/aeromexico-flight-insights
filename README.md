@@ -82,7 +82,7 @@ Lambda para Procesamiento: Otra fuente de ingesta proviene de un bucket S3 difer
 ##### CodePipeline:
 
 ###### Fuente de Código:
--GitHub Repository: El código fuente para todas las funciones Lambda, configuraciones de Kafka, Glue Jobs, y cualquier otro script se aloja en un repositorio de GitHub.
+- GitHub Repository: El código fuente para todas las funciones Lambda, configuraciones de Kafka, Glue Jobs, y cualquier otro script se aloja en un repositorio de GitHub.
 ###### Build:
 - CodeBuild con Docker: AWS CodeBuild se utiliza para construir imágenes Docker para las aplicaciones y servicios personalizados. Las imágenes Docker se generan a partir de Dockerfiles en el repositorio de GitHub.
 ###### Deploy:
