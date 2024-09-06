@@ -1,7 +1,7 @@
 import datetime
 import random 
 
-# Fechas de vacaciones en México
+# Fechas de vacaciones en México 
 vacaciones = [
     (datetime.datetime(2024, 7, 15), datetime.datetime(2024, 8, 15)),  # Verano
     (datetime.datetime(2024, 12, 15), datetime.datetime(2025, 1, 15)),  # Navidad
