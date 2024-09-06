@@ -1,5 +1,5 @@
 import json
-import time 
+import time
 from informacion_vuelos import generar_vuelo, informacion_vuelos
 from informacion_financiera import generar_informacion_financiera
 from informacion_clientes import generar_informacion_cliente
