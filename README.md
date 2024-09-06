@@ -61,3 +61,58 @@ Lambda para Procesamiento: Otra fuente de ingesta proviene de un bucket S3 difer
 
 
 
+
+## Arquitectura Completa con CloudFormation, CodePipeline, Docker, y Kubernetes
+#### 1. Aprovisionamiento de la Infraestructura con CloudFormation
+##### CloudFormation Templates:
+
+###### Infraestructura de AWS:
+- VPC y Subnets: Se crea una VPC (Virtual Private Cloud) con subnets en diferentes AZs. Esto incluye subnets para los brokers de Kafka, Kinesis Data Analytics, RDS, Lambda, etc.
+- MSK Cluster (Kafka): CloudFormation aprovisiona un Amazon MSK (Managed Streaming for Apache Kafka) Cluster con brokers distribuidos en múltiples AZs.
+- Kinesis Data Analytics: Se configura un Amazon Kinesis Data Analytics que recibe datos de Kafka para su procesamiento en tiempo real.
+- S3 Buckets: Los buckets S3 necesarios para almacenar datos crudos (STO Raw) y datos procesados son creados y configurados.
+- Glue Jobs y Crawlers: Los trabajos y crawlers de AWS Glue se configuran para catalogar datos en S3 y prepararlos para su análisis en Redshift.
+- RDS Instance: Se crea y configura una instancia de Amazon RDS para la ingesta de datos desde bases de datos relacionales.
+- Lambda Functions: Las funciones Lambda para el procesamiento de eventos, integración con SNS, y la ingesta desde otros buckets S3 se definen en el template.
+- DynamoDB Tables: Las tablas de DynamoDB para registrar eventos de Lambda también se configuran.
+- CloudWatch Alarms: Las alarmas y métricas de CloudWatch para monitorear el sistema se configuran para supervisar la salud y el rendimiento de todos los componentes.
+- Deploy: Con un solo comando de CloudFormation, toda la infraestructura se aprovisiona de manera automática, asegurando consistencia y reproducibilidad.
+
+#### 2. Integración y Entrega Continua con CodePipeline
+##### CodePipeline:
+
+###### Fuente de Código:
+GitHub Repository: El código fuente para todas las funciones Lambda, configuraciones de Kafka, Glue Jobs, y cualquier otro script se aloja en un repositorio de GitHub.
+Build:
+CodeBuild con Docker: AWS CodeBuild se utiliza para construir imágenes Docker para las aplicaciones y servicios personalizados. Las imágenes Docker se generan a partir de Dockerfiles en el repositorio de GitHub.
+Deploy:
+Implementación con CloudFormation: Las plantillas de CloudFormation generadas en la fase de build se despliegan automáticamente en AWS. Si hay alguna actualización en la infraestructura, CodePipeline se encargará de implementar los cambios de manera controlada.
+Implementación de Contenedores en Kubernetes: CodePipeline también integra la implementación continua de contenedores en un clúster de Kubernetes.
+Entornos de Prueba y Producción:
+
+Pruebas Automatizadas: Se ejecutan pruebas automatizadas en un entorno de pruebas antes de desplegar en producción, asegurando que cualquier cambio en el código o la infraestructura sea validado antes de afectar al entorno productivo.
+3. Contenedorización con Docker
+Docker:
+
+Imágenes Docker:
+Aplicaciones Customizadas: Las aplicaciones y microservicios se contenedorizan utilizando Docker. Por ejemplo, las funciones Lambda que requieren dependencias específicas pueden ser empaquetadas en imágenes Docker.
+Procesos de ETL y Analítica: Los trabajos ETL personalizados o cualquier otro proceso de datos intensivo también se pueden encapsular en contenedores Docker.
+Almacenamiento en ECR:
+
+Elastic Container Registry (ECR): Las imágenes Docker se almacenan en Amazon ECR, desde donde se pueden desplegar en cualquier entorno.
+4. Orquestación de Contenedores con Kubernetes
+Kubernetes:
+
+Clúster de Kubernetes en EKS:
+Amazon EKS: Se utiliza Amazon Elastic Kubernetes Service (EKS) para gestionar los contenedores. Kubernetes orquesta el despliegue, la escalabilidad y la gestión de los contenedores Docker en un clúster distribuido.
+Auto-Scaling: Kubernetes se configura para escalar automáticamente los pods basados en la carga de trabajo, garantizando que los servicios puedan manejar aumentos en el tráfico sin problemas de rendimiento.
+Implementación Rolling: Kubernetes facilita las implementaciones rolling, permitiendo que las nuevas versiones de las aplicaciones se desplieguen sin tiempo de inactividad.
+Integración con AWS:
+
+ALB (Application Load Balancer): Un ALB se coloca frente al clúster de Kubernetes para manejar el tráfico entrante y distribuirlo entre los diferentes pods.
+IAM Roles para Pods: Los roles de IAM se asignan a los pods para permitir un acceso seguro y controlado a otros servicios de AWS, como S3, DynamoDB, y SNS.
+5. Monitoreo y Gestión Continua
+CloudWatch y Prometheus:
+
+CloudWatch: CloudWatch sigue siendo la herramienta principal para la monitorización del rendimiento de los servicios de AWS. Además, puedes integrar Prometheus para la monitorización de métricas específicas de Kubernetes y aplicaciones dentro de los contenedores.
+Grafana: Para la visualización de métricas tanto de CloudWatch como de Prometheus, Grafana puede ser implementado, proporcionando dashboards en tiempo real para todo el sistema.
