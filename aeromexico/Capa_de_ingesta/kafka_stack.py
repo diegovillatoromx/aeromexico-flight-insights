@@ -2,7 +2,7 @@ import aws_cdk as cdk
 from aws_cdk import aws_msk as msk
 from aws_cdk import aws_ec2 as ec2 
 
-class KafkaStack(cdk.Stack):
+class KafkaStack(cdk.Stack): 
     def __init__(self, scope: cdk.Construct, construct_id: str, **kwargs) -> None:
         super().__init__(scope, construct_id, env=cdk.Environment(region='us-east-1'), **kwargs)
 
