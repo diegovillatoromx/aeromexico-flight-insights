@@ -36,26 +36,28 @@ Lambda para Procesamiento: Otra fuente de ingesta proviene de un bucket S3 difer
 
 #### AWS Lambda y SNS para Semaforización de Datos:
 
-Lectura de Data Streams: Un AWS Lambda se suscribe a Kinesis Data Streams para leer los datos procesados. Basado en reglas predefinidas (por ejemplo, umbrales de semaforización), Lambda genera alertas o notificaciones utilizando Amazon SNS (Simple Notification Service).
-Registro de Eventos en DynamoDB: Cada vez que Lambda se activa y procesa un evento, este se registra en Amazon DynamoDB. Esto permite llevar un historial detallado y consultar los eventos cuando sea necesario.
-3. Almacenamiento y Monitoreo
-Almacenamiento en Amazon S3 ("STO Raw"):
+- Lectura de Data Streams: Un AWS Lambda se suscribe a Kinesis Data Streams para leer los datos procesados. Basado en reglas predefinidas (por ejemplo, umbrales de semaforización), Lambda genera alertas o notificaciones utilizando Amazon SNS (Simple Notification Service).
+- Registro de Eventos en DynamoDB: Cada vez que Lambda se activa y procesa un evento, este se registra en Amazon DynamoDB. Esto permite llevar un historial detallado y consultar los eventos cuando sea necesario.
+### 3. Almacenamiento y Monitoreo
+#### Almacenamiento en Amazon S3 ("STO Raw"):
 
-Datos Persistentes: Todos los datos, ya sean en crudo desde Kafka, procesados desde Kinesis Data Firehose, o extraídos desde RDS y otros S3, se almacenan de manera persistente en "STO Raw". Este bucket actúa como el depósito central de datos sin procesar para análisis posterior.
-Glue Crawlers y Redshift:
+- Datos Persistentes: Todos los datos, ya sean en crudo desde Kafka, procesados desde Kinesis Data Firehose, o extraídos desde RDS y otros S3, se almacenan de manera persistente en "STO Raw". Este bucket actúa como el depósito central de datos sin procesar para análisis posterior.
 
-Catálogo de Datos: AWS Glue Crawlers se ejecutan sobre los datos en S3 para catalogar y crear metadatos. Estos datos catalogados se cargan luego en Amazon Redshift para análisis ad-hoc y creación de informes avanzados.
-CloudWatch para Monitoreo:
+#### Glue Crawlers y Redshift:
+- Catálogo de Datos: AWS Glue Crawlers se ejecutan sobre los datos en S3 para catalogar y crear metadatos. Estos datos catalogados se cargan luego en Amazon Redshift para análisis ad-hoc y creación de informes avanzados.
 
-Métricas y Alertas: Amazon CloudWatch monitorea todos los componentes del sistema, desde los brokers de Kafka hasta las funciones Lambda y el rendimiento de Redshift. Se configuran alarmas para cualquier anomalía detectada, asegurando que el equipo pueda reaccionar rápidamente a cualquier fallo en el sistema.
-4. Resiliencia y Escalabilidad
-Alta Disponibilidad:
+#### CloudWatch para Monitoreo:
 
-Redundancia en Kafka: La configuración multi-AZ de Kafka asegura que incluso si una AZ falla, los brokers en las otras AZs pueden continuar operando sin interrupciones.
-Respaldos en S3: Todos los datos críticos son respaldados en S3, lo que no solo garantiza la persistencia, sino que también permite una fácil recuperación en caso de fallos en otros sistemas.
-Escalabilidad Dinámica:
+- Métricas y Alertas: Amazon CloudWatch monitorea todos los componentes del sistema, desde los brokers de Kafka hasta las funciones Lambda y el rendimiento de Redshift. Se configuran alarmas para cualquier anomalía detectada, asegurando que el equipo pueda reaccionar rápidamente a cualquier fallo en el sistema.
+### 4. Resiliencia y Escalabilidad
 
-Auto Scaling: Los servicios involucrados como Lambda y Kinesis están configurados para escalar automáticamente en respuesta a cambios en la carga de trabajo, asegurando que el sistema pueda manejar picos de tráfico sin degradar el rendimiento.
+#### Alta Disponibilidad:
+
+- Redundancia en Kafka: La configuración multi-AZ de Kafka asegura que incluso si una AZ falla, los brokers en las otras AZs pueden continuar operando sin interrupciones.
+- Respaldos en S3: Todos los datos críticos son respaldados en S3, lo que no solo garantiza la persistencia, sino que también permite una fácil recuperación en caso de fallos en otros sistemas.
+#### Escalabilidad Dinámica:
+
+- Auto Scaling: Los servicios involucrados como Lambda y Kinesis están configurados para escalar automáticamente en respuesta a cambios en la carga de trabajo, asegurando que el sistema pueda manejar picos de tráfico sin degradar el rendimiento.
 
 
 
