@@ -1,4 +1,4 @@
-import random 
+import random  
 
 def generar_informacion_financiera(vuelo):
     costo_combustible_por_litro = random.uniform(0.5, 1.5)
