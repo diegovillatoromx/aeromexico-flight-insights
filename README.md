@@ -15,43 +15,47 @@ Esta arquitectura está diseñada para optimizar las rutas aéreas de Aeroméxic
 
 ![diagram](https://github.com/diegovillatoromx/aeromexico-flight-insights/blob/main/aeromexico-pipeline.png)
 
-### App Simulation (Simulación de Aplicación):
+### 1. Ingesta de Datos
+#### Streaming de Datos (Kafka):
 
-AWS Cloud9 con AWS CDK: Esta parte de la arquitectura simula la generación de datos en tiempo real, probablemente relacionada con rutas aéreas, pasajeros, costos, ingresos, etc. El entorno de desarrollo AWS Cloud9, junto con AWS CDK (Cloud Development Kit), se utiliza para desplegar y gestionar la infraestructura de la simulación.
+Brokers en Múltiples AZs: La arquitectura de Kafka está configurada con múltiples brokers distribuidos en diferentes Zonas de Disponibilidad (AZs) para garantizar alta disponibilidad y tolerancia a fallos. Cada broker recibe datos en tiempo real desde varias fuentes externas.
+Firehose y S3: Los datos recibidos por Kafka se enrutan a Amazon Kinesis Data Firehose para ser transformados y almacenados en un bucket de Amazon S3, denominado "STO Raw". Este S3 es la primera capa de almacenamiento crudo que permite una captura fiable y persistente de los datos.
 
-### Kafka:
+#### Datos desde RDS:
 
-Streams de Kafka: Los datos generados por la simulación son enviados a Kafka, que actúa como un broker de mensajería para manejar el flujo de datos en tiempo real. Kafka permite la ingestión continua de grandes volúmenes de datos y facilita el procesamiento en tiempo real.
+Glue para ETL: Un proceso ETL (Extract, Transform, Load) es gestionado por AWS Glue, que extrae datos desde una instancia de Amazon RDS. Estos datos también se transforman y se cargan en el mismo bucket de S3 ("STO Raw").
+#### Ingesta desde otro S3:
 
-### AWS Glue:
-Firehose: Los datos de Kafka se envían a través de Amazon Kinesis Data Firehose, que se encarga de cargar, transformar y entregar datos en servicios de destino como Amazon S3 y Amazon Redshift.
-AWS Glue: Se utiliza AWS Glue para ETL (Extracción, Transformación y Carga) de los datos en bruto almacenados en S3. AWS Glue cataloga, organiza y prepara los datos para su análisis. Aquí se almacenan en formatos como Parquet, que es eficiente para análisis.
+Lambda para Procesamiento: Otra fuente de ingesta proviene de un bucket S3 diferente. Un AWS Lambda se activa para procesar los datos y almacenarlos en el bucket "STO Raw". Este enfoque asegura que los datos desde diferentes fuentes confluyen en el mismo punto de almacenamiento para análisis unificado.
 
-### Amazon S3:
+### 2. Procesamiento y Transformación de Datos
+#### Kinesis Data Analytics:
 
-Conjunto de datos y almacenamiento RAW: S3 se utiliza como almacenamiento de datos en diferentes etapas: almacenamiento inicial de datos en bruto, y almacenamiento de datos transformados (por AWS Glue) en formato Parquet o JSON.
+- Integración con Kafka: Amazon Kinesis Data Analytics consume datos directamente desde los brokers de Kafka para realizar análisis en tiempo real. Las transformaciones y agregaciones se ejecutan en esta capa para preparar los datos para análisis más profundos.
+- Output a Data Streams: Los datos transformados se envían a Amazon Kinesis Data Streams para ser consumidos por otros servicios.
 
-### Data Analytics con Kinesis:
+#### AWS Lambda y SNS para Semaforización de Datos:
 
-Streams: La arquitectura también utiliza Amazon Kinesis Data Analytics para procesar los datos en tiempo real directamente desde Kafka, realizando análisis y agregaciones necesarias.
+Lectura de Data Streams: Un AWS Lambda se suscribe a Kinesis Data Streams para leer los datos procesados. Basado en reglas predefinidas (por ejemplo, umbrales de semaforización), Lambda genera alertas o notificaciones utilizando Amazon SNS (Simple Notification Service).
+Registro de Eventos en DynamoDB: Cada vez que Lambda se activa y procesa un evento, este se registra en Amazon DynamoDB. Esto permite llevar un historial detallado y consultar los eventos cuando sea necesario.
+3. Almacenamiento y Monitoreo
+Almacenamiento en Amazon S3 ("STO Raw"):
 
-### Amazon Redshift:
+Datos Persistentes: Todos los datos, ya sean en crudo desde Kafka, procesados desde Kinesis Data Firehose, o extraídos desde RDS y otros S3, se almacenan de manera persistente en "STO Raw". Este bucket actúa como el depósito central de datos sin procesar para análisis posterior.
+Glue Crawlers y Redshift:
 
-Almacenamiento de datos: Amazon Redshift es el data warehouse donde los datos transformados se almacenan para análisis de alto rendimiento. Redshift permite realizar consultas SQL complejas y análisis de grandes volúmenes de datos.
+Catálogo de Datos: AWS Glue Crawlers se ejecutan sobre los datos en S3 para catalogar y crear metadatos. Estos datos catalogados se cargan luego en Amazon Redshift para análisis ad-hoc y creación de informes avanzados.
+CloudWatch para Monitoreo:
 
-### Tableau:
+Métricas y Alertas: Amazon CloudWatch monitorea todos los componentes del sistema, desde los brokers de Kafka hasta las funciones Lambda y el rendimiento de Redshift. Se configuran alarmas para cualquier anomalía detectada, asegurando que el equipo pueda reaccionar rápidamente a cualquier fallo en el sistema.
+4. Resiliencia y Escalabilidad
+Alta Disponibilidad:
 
-Visualización de datos: Tableau se conecta a Amazon Redshift para visualizar los datos analíticos. Aquí es donde se crearán dashboards que muestran rutas aéreas, ingresos, costos, satisfacción del cliente, y otras métricas importantes.
+Redundancia en Kafka: La configuración multi-AZ de Kafka asegura que incluso si una AZ falla, los brokers en las otras AZs pueden continuar operando sin interrupciones.
+Respaldos en S3: Todos los datos críticos son respaldados en S3, lo que no solo garantiza la persistencia, sino que también permite una fácil recuperación en caso de fallos en otros sistemas.
+Escalabilidad Dinámica:
 
-### Lambda, DynamoDB, SNS, y CloudWatch:
-
-AWS Lambda: Se utiliza para ejecutar código en respuesta a eventos, por ejemplo, para procesar y enrutar datos analizados hacia DynamoDB o enviar notificaciones.
-DynamoDB: DynamoDB almacena datos procesados de forma eficiente, posiblemente para consultas rápidas o almacenamiento de metadatos.
-Amazon SNS (Simple Notification Service): SNS se utiliza para enviar alertas o notificaciones basadas en los análisis en tiempo real.
-Amazon CloudWatch: Se utiliza para monitorizar y registrar los eventos del sistema, permitiendo un seguimiento y resolución de problemas en tiempo real.
-
-
-
+Auto Scaling: Los servicios involucrados como Lambda y Kinesis están configurados para escalar automáticamente en respuesta a cambios en la carga de trabajo, asegurando que el sistema pueda manejar picos de tráfico sin degradar el rendimiento.
 
 
 
